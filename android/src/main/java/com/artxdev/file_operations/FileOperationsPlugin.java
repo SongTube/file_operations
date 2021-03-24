@@ -84,7 +84,8 @@ public class FileOperationsPlugin implements FlutterPlugin, MethodCallHandler, A
   }
 
   private String moveFile(File inputFile, File outputFile) {
-    // Create file
+
+    // Check path
     if (!outputFile.getParentFile().exists()) {
       if (!outputFile.getParentFile().mkdirs()) {
         return null;
@@ -101,8 +102,10 @@ public class FileOperationsPlugin implements FlutterPlugin, MethodCallHandler, A
       return "file_operations_error: "+inputFile.getPath()+" "+exceptionAsString;
     }
 
+    // File Channels
     FileChannel inChannel = null;
     FileChannel outChannel = null;
+
     try {
       inChannel = new FileInputStream(inputFile).getChannel();
       outChannel = new FileOutputStream(outputFile).getChannel();
@@ -111,7 +114,9 @@ public class FileOperationsPlugin implements FlutterPlugin, MethodCallHandler, A
       inChannel.transferTo(0, inChannel.size(), outChannel);
 
       // delete the original file
-      new File(inputFile.getPath()).delete();
+      try {
+        inputFile.delete();
+      } catch (Exception ignored) {}
 
       // Close channels
       inChannel.close();
