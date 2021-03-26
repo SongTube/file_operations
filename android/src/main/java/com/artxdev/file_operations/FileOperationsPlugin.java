@@ -88,7 +88,8 @@ public class FileOperationsPlugin implements FlutterPlugin, MethodCallHandler, A
     // Check path
     if (!outputFile.getParentFile().exists()) {
       if (!outputFile.getParentFile().mkdirs()) {
-        return null;
+        return "file_operations_error: couldn't create output path: "
+                + outputFile.getParentFile();
       }
     }
 
@@ -129,7 +130,7 @@ public class FileOperationsPlugin implements FlutterPlugin, MethodCallHandler, A
       String exceptionAsString = sw.toString();
       return "file_operations_error: "+inputFile.getPath()+" "+exceptionAsString;
     }
-    return outputFile.getAbsolutePath();
+    return outputFile.getPath();
   }
 
   @Override
