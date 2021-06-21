@@ -10,9 +10,9 @@ class FileOperations {
 
   static Future<dynamic> moveFile(String inputFile, String outputFile) async {
     if (await File(inputFile).exists()) {
-      String result = await _channel.invokeMethod(
+      String result = await (_channel.invokeMethod(
         "moveFile", { "inputFile": inputFile, "outputFile": outputFile }
-      );
+      ) as FutureOr<String>);
       if (result.contains("file_operations_error")) {
         return result;
       } else {
