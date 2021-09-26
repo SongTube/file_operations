@@ -11,8 +11,7 @@ class FileOperations {
   static Future<dynamic> moveFile(String inputFile, String outputFile) async {
     if (await File(inputFile).exists()) {
       String result = await (_channel.invokeMethod(
-        "moveFile", { "inputFile": inputFile, "outputFile": outputFile }
-      ) as FutureOr<String>);
+        "moveFile", { "inputFile": inputFile, "outputFile": outputFile }));
       if (result.contains("file_operations_error")) {
         return result;
       } else {
